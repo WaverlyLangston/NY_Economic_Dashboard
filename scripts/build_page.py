@@ -523,17 +523,14 @@ def chart_ces():
             hovertemplate=f"{label}: %{{y:.1%}}<extra></extra>",
         ))
     fig_a.add_hline(y=0, line_dash="dot", line_color=GREY, line_width=1)
+   layout = base_layout("New York Jobs Index by Industry")
+    layout["legend"] = dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.01, font=dict(size=10))
+    layout["margin"] = dict(l=60, r=200, t=80, b=60)
+    layout["height"] = 450
     fig_a.update_layout(
-        **base_layout("New York Jobs Index by Industry"),
+        **layout,
         xaxis_title="Monthly, Seasonally Adjusted",
         yaxis=dict(title="Change from Base Period", tickformat=".0%"),
-        legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.01, font=dict(size=10)),
-        margin=dict(l=60, r=200, t=80, b=60), height=450,
-        annotations=[dict(
-            text=f"Source: U.S. Bureau of Labor Statistics, CES (base: {ref_date})",
-            xref="paper", yref="paper", x=0, y=-0.1,
-            font=dict(size=10, color=GREY), showarrow=False)])
-
     # Chart B: Government vs Total Private Index
     fig_b = go.Figure()
     for col, color, label in [
