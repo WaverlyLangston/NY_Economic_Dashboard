@@ -511,9 +511,19 @@ def chart_ces():
     industry_cols = [c for c in monthly.columns
                      if c.endswith(" Index") and c not in
                      ("Total Nonfarm Index","Total Private Index","Government Index")]
-    gov_priv_cols = ["Total Private Index","Government Index"]
 
-    # Chart A: Jobs Index by Industry (all sectors except aggregates)
+    # Chart A: Jobs Index by Industry
+    layout_a = base_layout("New York Jobs Index by Industry")
+    layout_a["legend"] = dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.01, font=dict(size=10))
+    layout_a["margin"] = dict(l=60, r=200, t=80, b=60)
+    layout_a["height"] = 450
+    layout_a["xaxis_title"] = "Monthly, Seasonally Adjusted"
+    layout_a["yaxis"] = dict(title="Change from Base Period", tickformat=".0%")
+    layout_a["annotations"] = [dict(
+        text=f"Source: U.S. Bureau of Labor Statistics, CES (base: {ref_date})",
+        xref="paper", yref="paper", x=0, y=-0.1,
+        font=dict(size=10, color=GREY), showarrow=False)]
+
     fig_a = go.Figure()
     for i, col in enumerate(industry_cols):
         label = col.replace(" Index","")
@@ -523,14 +533,8 @@ def chart_ces():
             hovertemplate=f"{label}: %{{y:.1%}}<extra></extra>",
         ))
     fig_a.add_hline(y=0, line_dash="dot", line_color=GREY, line_width=1)
-   layout = base_layout("New York Jobs Index by Industry")
-    layout["legend"] = dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.01, font=dict(size=10))
-    layout["margin"] = dict(l=60, r=200, t=80, b=60)
-    layout["height"] = 450
-    fig_a.update_layout(
-        **layout,
-        xaxis_title="Monthly, Seasonally Adjusted",
-        yaxis=dict(title="Change from Base Period", tickformat=".0%"),
+    fig_a.update_layout(**layout_a)
+
     # Chart B: Government vs Total Private Index
     fig_b = go.Figure()
     for col, color, label in [
@@ -553,7 +557,7 @@ def chart_ces():
             xref="paper", yref="paper", x=0, y=-0.15,
             font=dict(size=10, color=GREY), showarrow=False)])
 
-    # Chart C: Change in Number of Jobs by Industry (bar chart)
+    # Chart C: Change in Number of Jobs by Industry
     if not changes:
         html_c = "<p>Industry change data unavailable.</p>"
     else:
@@ -569,7 +573,7 @@ def chart_ces():
             hovertemplate="%{x}: %{y:+,.0f} jobs<extra></extra>",
         ))
         fig_c.update_layout(
-            **base_layout(f"Change in Number of Jobs by Industry"),
+            **base_layout("Change in Number of Jobs by Industry"),
             xaxis=dict(title="", tickangle=-30),
             yaxis_title="Change in Number of Jobs",
             height=420,
@@ -582,7 +586,7 @@ def chart_ces():
         html_c = fig_to_html(fig_c, "ces_change")
 
     return fig_to_html(fig_a, "ces_index"), fig_to_html(fig_b, "ces_gov_priv"), html_c
-
+    
 # ══════════════════════════════════════════════════════════════════════════════
 #  LABOR FORCE (LAUS)
 # ══════════════════════════════════════════════════════════════════════════════
