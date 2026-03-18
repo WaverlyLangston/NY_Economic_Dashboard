@@ -2,7 +2,7 @@
 
 An interactive economic dashboard for New York State, published to GitHub Pages and updated automatically every day via GitHub Actions.
 
-**[View Dashboard →](https://waverlylangston.github.io/NY_Economic_Dashboard/)**
+**[View Dashboard →](https://waverlylangston.github.io/NY_Economic_Dashboard_WORKINGDRAFT/)**
 
 ## Data Sources
 
