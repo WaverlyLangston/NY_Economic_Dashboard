@@ -46,12 +46,7 @@ ny-economic-dashboard/
 ```
 
 ## Data Refresh
-
-Data refreshes automatically every day at 8:00 AM UTC (4:00 AM ET) via GitHub Actions. The workflow:
-1. Fetches fresh data from all APIs (BEA, BLS, Census)
-2. Saves pre-processed JSON files to `data/`
-3. Rebuilds `docs/index.html`
-4. Commits and pushes the updated files
+Data refreshes automatically every day at 4:00AM via GitHub Actions.
 
 
 ## Visualizations
